@@ -25,7 +25,7 @@
        
     </main>
     <div class="btn"><el-button>立即注册</el-button></div>
-    <p class="xiaozi">已有账号<a href="./#/login" style='color:#6B996B;'>立即登录</a></p>
+    <p class="xiaozi">已有账号？<a href="./#/login" style='color:#6B996B;'>立即登录</a></p>
     <footer class="footer">©wangkefan.com 2023</footer>
 </template>
 
