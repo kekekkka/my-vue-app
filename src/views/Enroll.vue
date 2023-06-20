@@ -24,8 +24,8 @@
         </div>
        
     </main>
-    <div class="btn"><el-button>立即登录</el-button></div>
-    <p class="xiaozi">没有账号？<a href="./#/enroll" style='color:#6B996B;'>注册新用户</a></p>
+    <div class="btn"><el-button>立即注册</el-button></div>
+    <p class="xiaozi">已有账号<a href="./#/login" style='color:#6B996B;'>立即登录</a></p>
     <footer class="footer">©wangkefan.com 2023</footer>
 </template>
 

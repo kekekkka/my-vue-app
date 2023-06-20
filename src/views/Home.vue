@@ -8,7 +8,10 @@
       <router-link to="/login">
         <el-button>立即登录</el-button>
       </router-link>
-      <el-button>注册账号</el-button>
+      <router-link to="/enroll">
+        <el-button>注册账号</el-button>
+      </router-link>
+      
     </div>
   </header>
 
