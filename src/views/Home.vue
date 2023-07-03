@@ -1,22 +1,15 @@
 
+<script lang="ts" setup>
+import { reactive, ref } from 'vue'
+import Header from "../components/Header.vue"
+const input = ref('')
+
+</script>
 
 <template>
-  <header class="no-login" id="header">
-    <h1>LET'S SHARE</h1>
-    <p>精品文章汇聚(如提交垃圾文章请勿展示在首页)</p>
-    <div class="btns">
-      <router-link to="/login">
-        <el-button>立即登录</el-button>
-      </router-link>
-      <router-link to="/enroll">
-        <el-button>注册账号</el-button>
-      </router-link>
-      
-    </div>
-  </header>
 
 
-
+<Header></Header>
 
   <main class="main" v-for="n in 10">
     <a href="">
@@ -42,37 +35,7 @@
   />
   <footer class="footer">©wangkefan.com 2023</footer>
 </template>
-
-
-
-
-
 <style scoped lang="scss">
-.no-login {
-  background: #149739;
-  text-align: center;
-  color: white;
-  padding: 40px;
-
-  h1 {
-
-    padding: 20px 0;
-    font-size: 40px;
-  }
-
-  p {
-    padding: 10px 0 40px;
-    font-size: 14px;
-  }
-
-  .btns {
-    button {
-      margin: 0 10px;
-      padding: 18px;
-    }
-  }
-
-}
 
 .main {
   padding: 0 0 0 140px;

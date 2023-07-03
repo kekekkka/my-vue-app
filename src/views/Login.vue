@@ -1,104 +1,96 @@
+<script  setup>
+import { ElMessage } from 'element-plus'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
+import { reactive, ref } from 'vue'
+import Header from "../components/Header.vue"
+import Footer from "../components/Footer.vue"
+const router = useRouter()
+const input = ref('')
+const formSize = ref('default')
+const ruleFormRef = ref()
+const labelPosition = ref('top')
+const rules = reactive({
+    username: [
+        { required: true, message: '请输入用户名', trigger: 'blur' },
+        { min: 1, max: 15, message: '请输入1-15位字符', trigger: 'blur' },
+    ], password: [
+        { required: true, message: '请输入密码', trigger: 'blur' },
+        { min: 6, max: 15, message: '请输入6-15位字符', trigger: 'blur' },
+    ]
+})
 
+
+const formLabelAlign = reactive({
+    username: '',
+    password: '',
+
+})
+
+const open4 = (response) => {
+    ElMessage.error(response.data.msg)
+}
+
+const submitForm = async (formEl) => {
+    if (!formEl) return
+    await formEl.validate((valid, fields) => {
+        if (valid) {
+            console.log('submit!')
+            axios.post('//blog-server.hunger-valley.com/auth/login', {
+                username: formLabelAlign.username,
+                password: formLabelAlign.password
+            })
+                .then(function (response) {
+                    if (response.data.status === "ok") {
+                        router.push('/success')
+                    } else if (response.data.status === "fail") {
+                        open4(response)
+                    }
+
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        } else {
+            console.log('error submit!', fields)
+        }
+    })
+}
+</script>
 <template>
-    <header class="no-login" id="header">
-        <h1>LET'S SHARE</h1>
-        <p>精品文章汇聚(如提交垃圾文章请勿展示在首页)</p>
-        <div class="btns">
-            <router-link to="/login">
-                <el-button>立即登录</el-button>
-            </router-link>
-            <router-link to="/enroll">
-                <el-button>注册账号</el-button>
-            </router-link>
-
+    <Header />
+    <div>
+        <el-radio-group v-model="labelPosition" label="label position"></el-radio-group>
+        <div class="filed">
+            <el-form ref="ruleFormRef" :label-position="labelPosition" label-width="100px" :model="formLabelAlign"
+                :rules="rules" :size="formSize" status-icon style="max-width: 460px">
+                <el-form-item label="用户名" prop="username">
+                    <el-input v-model="formLabelAlign.username" />
+                </el-form-item>
+                <el-form-item label="密码" prop="password">
+                    <el-input v-model="formLabelAlign.password" type="password" placeholder="请输入密码" show-password />
+                </el-form-item>
+                <el-button @click="submitForm(ruleFormRef)">立即登录</el-button>
+            </el-form>
         </div>
-    </header>
-    <main>
-        <div class="yonghu ">
-            <h5>用户名</h5>
-            <el-input class="name" v-model="input" placeholder="用户名" />
-        </div>
-        <div class="mima">
-            <h5>密码</h5>
-            <el-input class="password" v-model="input" placeholder="密码" />
-        </div>
-       
-    </main>
-    <div class="btn"><el-button>立即登录</el-button></div>
-    <p class="xiaozi">没有账号？<a href="./#/enroll" style='color:#6B996B;'>注册新用户</a></p>
-    <footer class="footer">©wangkefan.com 2023</footer>
+    </div>
+    <p class="xiaozi">没有账号？<router-link to="/enroll" style='color:#6B996B;'>注册新用户</router-link></p>
+    <Footer></Footer>
 </template>
 
 
 <style scoped lang="scss">
-.no-login {
-    background: #149739;
-    text-align: center;
-    color: white;
-    padding: 40px;
-
-    h1 {
-
-        padding: 20px 0;
-        font-size: 40px;
-    }
-
-    p {
-        padding: 10px 0 40px;
-        font-size: 14px;
-    }
-
-    .btns {
-        button {
-            margin: 0 10px;
-            padding: 18px;
-        }
-    }
-
+.filed {
+    display: flex;
+    justify-content: center;
 }
 
-main {
-    text-align: center;
-    .yonghu {
-        h5 {
-            margin: 40px 0 10px;
-        }
-    }
-     .mima {
-        display:inline-block;
-        h5 {
-          margin: 16px 0 10px ;
-            text-align: left;
-        }
-    }
-    .name, .password {
-        width: 300px;
-    }
-}
-.btn{
-//   margin: 30px 0 0 484px;
-}
-.xiaozi{
+.xiaozi {
     text-align: center;
     margin-top: 40px;
     font-size: 12px;
     color: #999;
 }
-.footer{
-    
-   margin: 0;
-  background:#D7D7D7;
-  text-align: center;
-  position: fixed;
-  padding: 26px  0;
-  font-size: 12px;
-  color: #756675;
-  bottom: 0;
- width: 100%;
-}
 </style>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-const input = ref('')
-</script>
